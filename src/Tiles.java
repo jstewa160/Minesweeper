@@ -4,13 +4,15 @@ public class Tiles {
     boolean hiddenTile;
     boolean checked;
     int neighbours = 0;
+    int gridSquareType = 0;
 
-    public Tiles(boolean mine, boolean flag, boolean hiddenTile,
-                 int neighbours)
+    public Tiles(boolean mine, boolean flag, boolean hiddenTile, boolean checked,
+                 int neighbours, int gridSquareType)
     {
         this.mine = false;
         this.flag = flag;
         this.hiddenTile = hiddenTile;
+        this.checked = checked;
     }
 
 

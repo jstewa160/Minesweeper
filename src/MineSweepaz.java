@@ -5,8 +5,16 @@ public class MineSweepaz {
         public static void main(String[] args) {
             System.out.println("Start");
             Board gameBoard = new Board();
-            gameBoard.userInputTest();
-            //gameBoard.boardUpdate();
+            gameBoard.hiddenBoard();
+            gameBoard.populateHiddenWithMines();
+            gameBoard.visualBoard();
+
+            while(true){
+                gameBoard.userInputTest();
+                gameBoard.hiddenBoardUpdate();
+                gameBoard.boardUpdate();
+            }
+
         }
 
 }
