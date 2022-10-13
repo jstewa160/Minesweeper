@@ -8,7 +8,7 @@ public class Board {
     static int gridSquareNum = 0;
     String[][] grid = new String[maxsize + 2][maxsize + 2];
 
-    int[][] nearbyMinesGrid = new int[maxsize + 2][maxsize + 2];
+    //int[][] nearbyMinesGrid = new int[maxsize + 2][maxsize + 2];
 
     public Board() {
 
@@ -101,21 +101,44 @@ public class Board {
 
         int xpart;
         int ypart;
+        String flagOrReveal;
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nEnter x: ");
-        xpart = sc.nextInt();
         System.out.println("\nEnter y: ");
+        xpart = sc.nextInt();
+        System.out.println("\nEnter x: ");
         ypart = sc.nextInt();
+        System.out.println("\nWhat do you want to place? [F]lag, [R]eveal Tile");
+        Scanner ss = new Scanner(System.in);
+        flagOrReveal = ss.nextLine();
+        if(flagOrReveal.equals("F")){
+            tileStorage[xpart][ypart].flag = true;
+        } else if (flagOrReveal.equals("R")) {
+            tileStorage[xpart][ypart].hiddenTile = false;
+            tileStorage[xpart][ypart].flag = false;
+        }
 
-        tileStorage[xpart][ypart].hiddenTile = false;
-
+        if(!tileStorage[xpart][ypart].hiddenTile){
+            for(int i = -1; i <= 1; i++){
+                for(int j = -1; j <= 1; j++){
+                    if(tileStorage[xpart + i][ypart + j] == null){
+                        break;
+                    }
+                     else if(tileStorage[xpart + i][ypart + j].hiddenTile
+                            && !tileStorage[xpart + i][ypart + j].mine
+                            && tileStorage[xpart + i][ypart + j].neighbours <= 0)
+                    {
+                        tileStorage[xpart + i][ypart + j].hiddenTile = false;
+                    }
+                }
+            }
+        }
 
     }
 
     public static boolean mineAdd() {
         Random rand = new Random();
-        int upper = 4;
+        int upper = 6;
         int lower = 0;
         int mine = rand.nextInt(lower, upper);
         if (mine == 1) {
@@ -127,7 +150,6 @@ public class Board {
 
     public int neighbourMinesForHiddenBoard() {
         int neighboursCount = 0;
-        boolean tileMine = false;
 
         for (int i = 1; i < tileStorage[1].length-1; i++) {
             for (int j = 1; j < tileStorage[1].length-1; j++) {
@@ -147,34 +169,6 @@ public class Board {
         return neighboursCount;
     }
 
-    /*public int nearby(){
-        for(int i = -1; i <= 1; i++){
-            for(int j = -1; j <= 1; j++){
-                if(tileStorage[i][j].mine){
-
-                }
-            }
-        }
-    }*/
-
-    /*public int getGridSquareNum(){
-        if(tileStorage[xpart + 1][ypart + 1].gridSquareType == 0){
-            gridSquareNum = 0;
-        }
-        if(tileStorage[xpart + 1][ypart + 1].gridSquareType == 1){
-            gridSquareNum = 1;
-        }
-        if(tileStorage[xpart + 1][ypart + 1].gridSquareType == 2){
-            grid[xpart + 1][ypart + 1] = "[ F ]";
-            gridSquareNum = 2;
-        }
-        if(tileStorage[xpart + 1][ypart + 1].gridSquareType == 3){
-            grid[xpart + 1][ypart + 1] = "[ x ]";
-            gridSquareNum = 3;
-        }
-        return gridSquareNum;
-
-    }*/
 
 
 
