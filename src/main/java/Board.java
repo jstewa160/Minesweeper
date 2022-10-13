@@ -79,7 +79,12 @@ public class Board {
                 }
                 else if(!tileStorage[i][j].hiddenTile && !tileStorage[i][j].mine){
                     int val = tileStorage[i][j].neighbours;
-                    grid[i][j] = "[   ]";
+                    if(val == 0){
+                        grid[i][j] = "[   ]";
+                    }else{
+                        grid[i][j] = "[ "+ val + " ]";
+                    }
+
                     System.out.print(grid[i][j]);
                 }
                 else if(tileStorage[i][j].hiddenTile){
@@ -124,12 +129,15 @@ public class Board {
         int neighboursCount = 0;
         boolean tileMine = false;
 
-        for (int i = 1; i < tileStorage[1].length; i++) {
-            for (int j = 1; j < tileStorage[1].length; j++) {
+        for (int i = 1; i < tileStorage[1].length-1; i++) {
+            for (int j = 1; j < tileStorage[1].length-1; j++) {
                 for(int x = -1; x <= 1; x++){
                     for(int y = -1; y <= 1; y++){
-                        if(tileStorage[x][y].mine){
-                            neighboursCount++;
+                        if(tileStorage[i + x][j + y] == null){
+                            break;
+                        }
+                        else if(tileStorage[i + x][j + y].mine){
+                            tileStorage[i][j].neighbours++;
                         }
                     }
                 }

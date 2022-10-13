@@ -7,6 +7,7 @@ public class MineSweepaz {
             Board gameBoard = new Board();
             gameBoard.hiddenBoard();
             gameBoard.populateHiddenWithMines();
+            gameBoard.neighbourMinesForHiddenBoard();
             gameBoard.visualBoard();
 
             while(true){
